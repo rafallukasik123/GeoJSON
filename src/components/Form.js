@@ -27,7 +27,7 @@ class Form extends Component {
        const table=res.data.features;
         const table_header=res.data.features[0].properties;
        const keys=Object.keys(table_header);
-       const table_column=this.state.columnDefs;
+     
        keys.forEach(element => {
         this.setState(
           {
@@ -40,29 +40,39 @@ class Form extends Component {
         )
        });
         
-
-
-    
-       table.forEach(element => {
-        
-        console.log(element.properties);
+      
+      
        
+     
+       table.forEach(element => {
+        const object_final={};
+
+        keys.forEach(el => {
+        
+         const temp=element.properties[el];
+         object_final[el]=temp;
+        console.log(object_final);
+        
+          
+          
+      });
+      this.setState(prevState =>(
+        {
+          
+         
+          rowData: [...prevState.rowData,object_final]
+
+        }
+       
+        
+      )
+      )
 
 
-
-        this.setState(
-          {
-            
-           
-            rowData:this.state.rowData.concat([{headerName: element, field: element}])
-
-          }
-
-
-        )
+     
        });
-
-       console.log(this.state.columnDefs);
+       
+       
       
       })
   }
@@ -76,7 +86,7 @@ if(this.state.columnDefs.length!=0){
     <div 
     className="ag-theme-balham "
     style={{ 
-    height: '1200px', 
+    height: '500px', 
     width: '1800px' }} 
   >
     <AgGridReact
