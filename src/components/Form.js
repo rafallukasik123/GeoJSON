@@ -80,6 +80,7 @@ class Form extends Component {
     margin: 4%;
     padding: 2%;
     border: solid black 2px;
+    min-width :500px;
    
 
     `;
