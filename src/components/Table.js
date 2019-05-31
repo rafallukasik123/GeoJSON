@@ -14,34 +14,35 @@ class Table extends Component {
     this.state = {
       columnDefs: [],
       rowData: [],
-      rowClikedData:null,
-      rowCliked : false,
+      rowClikedData: null,
+      rowCliked: false,
+      keys_object: []
 
     }
-    this.handleClick=this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  
-handleClick = (e) =>{
-this.setState({
-  rowClikedData : e.data,
-  rowCliked : true
-})
-}
 
-handleClickForm = (e) =>{
+  handleClick = (e) => {
+    this.setState({
+      rowClikedData: e.data,
+      rowCliked: true
+    })
+  }
 
-  
-  this.setState({
-    rowCliked : false
-  })
-}
+  handleClickForm = (e) => {
+
+
+    this.setState({
+      rowCliked: false
+    })
+  }
 
 
 
   componentDidMount() {
-  
-   axios.get(data_source)
+
+    axios.get(data_source)
       .then(res => {
 
         const table = res.data.features;
@@ -51,7 +52,7 @@ handleClickForm = (e) =>{
         keys.forEach(element => {
           this.setState(
             {
-
+              keys_object: keys,
               columnDefs: this.state.columnDefs.concat([{ headerName: element, field: element }])
 
             }
@@ -103,7 +104,7 @@ handleClickForm = (e) =>{
     if (this.state.columnDefs.length != 0) {
 
 
-      if(!this.state.rowCliked){
+      if (!this.state.rowCliked) {
         return (
 
           <div
@@ -113,25 +114,25 @@ handleClickForm = (e) =>{
               width: '1800px'
             }}
           >
-            <AgGridReact 
+            <AgGridReact
               columnDefs={this.state.columnDefs}
-              rowData={this.state.rowData} onRowClicked={this.handleClick} >
+              rowData={this.state.rowData} onRowClicked={this.handleClick}  >
             </AgGridReact>
           </div>
         );
       }
-      else{
-        console.log(this.state.rowClikedData);
+      else {
+
 
         return (
-        <Form onClickBack={this.handleClickForm} rowClikedData={this.state.rowClikedData} />
+          <Form onClickBack={this.handleClickForm} rowClikedData={this.state.rowClikedData} keys={this.state.keys_object} />
         )
       }
 
 
 
 
-      
+
 
     }
     else {
